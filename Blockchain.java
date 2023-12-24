@@ -1,4 +1,6 @@
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 public class Blockchain {
@@ -26,6 +28,7 @@ public class Blockchain {
         }
         public void addTransaction(Transaction transaction) {
             transactions.add(transaction);
+            transactionCount++;
         }
 
         public long getTimestamp() {
@@ -68,17 +71,24 @@ public class Blockchain {
     }
 
     public int blockCount = 0;
-    public List<Block> Chain;
+    public Hashtable<String ,Block> Chain;
+    private List<String> HashList;
 
     private Blockchain() {
-        this.Chain = new ArrayList<>();
+        this.Chain = new Hashtable<>();
     }
 
-    public void addBlock() {
-        final String hash = toString();
-        Chain.add(new Block(Chain.get(blockCount), hash);
+    public void addBlock(String user) throws NoSuchAlgorithmException {
+        final String hash = user + blockCount;
+        if (Chain.get(blockCount) == null) {
+            Chain.put(hash, new Block("null", HashGenerator.createHash(hash)));
+        } else {
+            Chain.put(hash, new Block(Chain.get(blockCount).getHash(), HashGenerator.createHash(hash)));
+        }
+        HashList.add(blockCount++, hash);
+        this.blockCount++;
     }
-    public void addTransaction(Block block, Transaction transaction) {
-        block.addTransaction(transaction);
+    public void addTransaction(int blockIndex, Transaction transaction) {
+        Chain.get(HashList.get(blockIndex)).addTransaction(transaction);
     }
 }

@@ -20,25 +20,35 @@ public class Blockchain {
             this.timestamp = System.currentTimeMillis();
             this.hash = calculateBlockHash();
         }
+
         public List<Transaction> getTransactions() {
             return transactions;
         }
+
         public long getTimestamp() {
             return timestamp;
         }
+
         public String getHash() {
             return hash;
         }
+
         public int getMaxTransactions() {
             return maxTransactions;
         }
+
         public void addTransaction(Transaction transaction) {
             transactions.add(transaction);
         }
+
         private String calculateBlockHash() throws NoSuchAlgorithmException {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
             String blockData = previousHash + lastTransaction.getAmount() + timestamp + merkleRoot;
-            byte[] hashBytes = digest.digest(blockData.getBytes());
+            return hash(blockData);
+        }
+
+        private String hash(String input) throws NoSuchAlgorithmException {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(input.getBytes());
 
             StringBuilder hashStringBuilder = new StringBuilder();
             for (byte hashByte : hashBytes) {
@@ -47,21 +57,22 @@ public class Blockchain {
 
             return hashStringBuilder.toString();
         }
+
         private String calculateMerkleRoot(List<String> transactionData) {
             MerkleTree merkleTree = new MerkleTree(transactionData);
             return merkleTree.getMerkleRoot();
         }
 
-        public String getPreviousHash() {
-            return previousHash;
-        }
-
         public String getMerkleRoot() {
             return merkleRoot;
         }
+
+        public String getPreviousHash() {
+            return previousHash;
+        }
     }
 
-    private class Transaction {
+    public static class Transaction {
         private final String sender;
         private final String receiver;
         private final double amount;
@@ -72,17 +83,6 @@ public class Blockchain {
             this.receiver = receiver;
             this.amount = amount;
             this.signature = signature;
-        }
-
-        private String encryptTransactionData(String publicKey) throws Exception {
-            AsymmetricEncryption encryption = new AsymmetricEncryption();
-            return encryption.encrypt(sender + receiver + amount + signature, publicKey);
-        }
-
-        private void decryptTransactionData(String encryptedData, String privateKey) throws Exception {
-            AsymmetricEncryption encryption = new AsymmetricEncryption();
-            String decryptedData = encryption.decrypt(encryptedData, privateKey);
-
         }
 
         public String getSender() {
@@ -148,23 +148,6 @@ public class Blockchain {
         } else {
             Chain.get(HashList.get(blockCount)).addTransaction(transaction);
         }
-    }
-
-    private void mineBlock() throws NoSuchAlgorithmException {
-        Transaction dummyTransaction = new Transaction("Miner", "Recipient", 10.0, "DummySignature");
-        List<String> transactionData = new ArrayList<>();
-        transactionData.add("MinerRecipient10.0DummySignature");
-        addBlock(dummyTransaction, transactionData);
-    }
-
-    private String hash(String input) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] hashBytes = md.digest(input.getBytes());
-        StringBuilder sb = new StringBuilder();
-        for (byte b : hashBytes) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
     }
 
     public void printBlockchain() {

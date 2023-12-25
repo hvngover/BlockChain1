@@ -43,22 +43,10 @@ public class Blockchain {
 
         private String calculateBlockHash() throws NoSuchAlgorithmException {
             String blockData = previousHash + lastTransaction.getAmount() + timestamp + merkleRoot;
-            return hash(blockData);
+            return Hashing.hashData(blockData);
         }
 
-        private String hash(String input) throws NoSuchAlgorithmException {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(input.getBytes());
-
-            StringBuilder hashStringBuilder = new StringBuilder();
-            for (byte hashByte : hashBytes) {
-                hashStringBuilder.append(String.format("%02x", hashByte));
-            }
-
-            return hashStringBuilder.toString();
-        }
-
-        private String calculateMerkleRoot(List<String> transactionData) {
+        private String calculateMerkleRoot(List<String> transactionData) throws NoSuchAlgorithmException {
             MerkleTree merkleTree = new MerkleTree(transactionData);
             return merkleTree.getMerkleRoot();
         }
@@ -147,6 +135,7 @@ public class Blockchain {
             addBlock(transaction, transactionData);
         } else {
             Chain.get(HashList.get(blockCount)).addTransaction(transaction);
+
         }
     }
 

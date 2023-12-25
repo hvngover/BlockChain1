@@ -1,7 +1,7 @@
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-public class UserInterface {
+class UserInterface {
     private Blockchain blockchain;
 
     public UserInterface(Blockchain blockchain) {
@@ -16,7 +16,7 @@ public class UserInterface {
             System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:

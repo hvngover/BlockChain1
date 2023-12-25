@@ -1,8 +1,7 @@
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class Blockchain {
+class Blockchain {
     private class Block {
         private List<Transaction> transactions;
         private Transaction lastTransaction;
@@ -14,6 +13,7 @@ public class Blockchain {
 
         public Block(String previousHash, List<String> transactionData, Transaction transaction) throws NoSuchAlgorithmException {
             this.lastTransaction = transaction;
+            this.transactions = new ArrayList<>();
             transactions.add(lastTransaction);
             this.merkleRoot = calculateMerkleRoot(transactionData);
             this.previousHash = previousHash;
@@ -41,6 +41,14 @@ public class Blockchain {
             transactions.add(transaction);
         }
 
+        public String getPreviousHash() {
+            return previousHash;
+        }
+
+        public String getMerkleRoot() {
+            return merkleRoot;
+        }
+
         private String calculateBlockHash() throws NoSuchAlgorithmException {
             String blockData = previousHash + lastTransaction.getAmount() + timestamp + merkleRoot;
             return Hashing.hashData(blockData);
@@ -48,15 +56,7 @@ public class Blockchain {
 
         private String calculateMerkleRoot(List<String> transactionData) throws NoSuchAlgorithmException {
             MerkleTree merkleTree = new MerkleTree(transactionData);
-            return merkleTree.getMerkleRoot();
-        }
-
-        public String getMerkleRoot() {
-            return merkleRoot;
-        }
-
-        public String getPreviousHash() {
-            return previousHash;
+            return Hashing.hashData(merkleTree.getMerkleRoot());
         }
     }
 
@@ -71,6 +71,16 @@ public class Blockchain {
             this.receiver = receiver;
             this.amount = amount;
             this.signature = signature;
+        }
+
+        private String encryptTransactionData(String publicKey) throws Exception {
+            AsymmetricEncryption encryption = new AsymmetricEncryption();
+            return encryption.encrypt(sender + receiver + amount + signature, publicKey);
+        }
+
+        private void decryptTransactionData(String encryptedData, String privateKey) throws Exception {
+            AsymmetricEncryption encryption = new AsymmetricEncryption();
+            String decryptedData = encryption.decrypt(encryptedData, privateKey);
         }
 
         public String getSender() {
@@ -90,10 +100,10 @@ public class Blockchain {
         }
     }
 
+    private static Blockchain instance;
     private int blockCount = 0;
     private Hashtable<String, Block> Chain;
     private List<String> HashList;
-    private static Blockchain blockchain;
 
     private Blockchain() {
         this.Chain = new Hashtable<>();
@@ -101,15 +111,15 @@ public class Blockchain {
     }
 
     public static Blockchain getInstance() {
-        if (blockchain == null) {
-            blockchain = new Blockchain();
+        if (instance == null) {
+            instance = new Blockchain();
         }
-        return blockchain;
+        return instance;
     }
 
     private void addBlock(Transaction transaction, List<String> transactionData) throws NoSuchAlgorithmException {
         Block block;
-        if (HashList.isEmpty()) {
+        if (HashList.get(blockCount) == null) {
             block = new Block("null", transactionData, transaction);
         } else {
             block = new Block(Chain.get(HashList.get(blockCount)).getHash(), transactionData, transaction);
@@ -124,25 +134,27 @@ public class Blockchain {
             System.out.println("Signature is incorrect");
             return;
         }
-
-        List<String> transactionData = new ArrayList<>();
-        for (Transaction tx : Chain.get(HashList.get(blockCount)).getTransactions()) {
-            transactionData.add(tx.getSender() + tx.getReceiver() + tx.getAmount() + tx.getSignature());
+        if (HashList.isEmpty()) {
+            HashList.add(0, "");
+            Chain.put("",new Block("", new ArrayList<>(), new Transaction("", "", 0, "")));
         }
-        transactionData.add(transaction.getSender() + transaction.getReceiver() + transaction.getAmount() + transaction.getSignature());
-
         if (Chain.get(HashList.get(blockCount)).getTransactions().size() == Chain.get(HashList.get(blockCount)).getMaxTransactions()) {
+            List<String> transactionData = new ArrayList<>();
+            for (Transaction tx : Chain.get(HashList.get(blockCount)).getTransactions()) {
+                transactionData.add(tx.getSender() + tx.getReceiver() + tx.getAmount() + tx.getSignature());
+            }
+
+            transactionData.add(transaction.getSender() + transaction.getReceiver() + transaction.getAmount() + transaction.getSignature());
             addBlock(transaction, transactionData);
         } else {
             Chain.get(HashList.get(blockCount)).addTransaction(transaction);
-
         }
     }
 
     public void printBlockchain() {
         for (String hash : HashList) {
             Block block = Chain.get(hash);
-            System.out.println("Hash: " + block.getHash());
+            System.out.println("Block Hash: " + block.getHash());
             System.out.println("Previous Hash: " + block.getPreviousHash());
             System.out.println("Timestamp: " + block.getTimestamp());
             System.out.println("Merkle Root: " + block.getMerkleRoot());

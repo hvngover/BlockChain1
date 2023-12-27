@@ -80,7 +80,7 @@ class Blockchain {
 
         private void decryptTransactionData(String encryptedData, String privateKey) throws Exception {
             AsymmetricEncryption encryption = new AsymmetricEncryption();
-            String decryptedData = encryption.decrypt(encryptedData, privateKey);
+            String decryptedData = encryption.decrypt(encryptedData);
         }
 
         public String getSender() {

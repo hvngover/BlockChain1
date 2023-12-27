@@ -1,39 +1,48 @@
-import javax.crypto.Cipher;
-import java.security.*;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
-
 public class AsymmetricEncryption {
-    private KeyPair keyPair;
+    private static final String publicKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String privateKey = "ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba9876543210";
 
-    public AsymmetricEncryption() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(1024);
-        this.keyPair = keyPairGenerator.generateKeyPair();
+    public boolean isPublicKey(String publicKey) {
+        if (publicKey == this.publicKey) {
+            return true;
+        }
+        return false;
     }
 
-    public String getPublicKey() {
-        return Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
+    public boolean isPrivateKey(String privateKey) {
+        if (privateKey == this.privateKey) {
+            return true;
+        }
+        return false;
     }
 
-    public String encrypt(String data, String publicKey) throws Exception {
-        PublicKey key = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey)));
+    public String encrypt(String plaintext) {
+        StringBuilder ciphertext = new StringBuilder();
 
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.ENCRYPT_MODE, key);
+        for (char c : plaintext.toCharArray()) {
+            int index = publicKey.indexOf(c);
+            if (index != -1) {
+                ciphertext.append(privateKey.charAt(index));
+            } else {
+                ciphertext.append(c);
+            }
+        }
 
-        byte[] encryptedBytes = cipher.doFinal(data.getBytes());
-        return Base64.getEncoder().encodeToString(encryptedBytes);
+        return ciphertext.toString();
     }
 
-    public String decrypt(String encryptedData, String privateKey) throws Exception {
-        PrivateKey key = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey)));
+    public String decrypt(String ciphertext) {
+        StringBuilder plaintext = new StringBuilder();
 
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, key);
+        for (char c : ciphertext.toCharArray()) {
+            int index = privateKey.indexOf(c);
+            if (index != -1) {
+                plaintext.append(publicKey.charAt(index));
+            } else {
+                plaintext.append(c);
+            }
+        }
 
-        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
-        return new String(decryptedBytes);
+        return plaintext.toString();
     }
 }

@@ -75,7 +75,7 @@ class Blockchain {
 
         private String encryptTransactionData(String publicKey) throws Exception {
             AsymmetricEncryption encryption = new AsymmetricEncryption();
-            return encryption.encrypt(sender + receiver + amount + signature, publicKey);
+            return encryption.encrypt(sender + receiver + amount + signature);
         }
 
         private void decryptTransactionData(String encryptedData, String privateKey) throws Exception {

@@ -2,15 +2,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Hashing {
-    public static String hashData(String data) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hashBytes = digest.digest(data.getBytes());
+    public static String hashData(String data) {
+        int hash = 0;
 
-        StringBuilder hashStringBuilder = new StringBuilder();
-        for (byte hashByte : hashBytes) {
-            hashStringBuilder.append(String.format("%02x", hashByte));
+        for (char c : data.toCharArray()) {
+            hash ^= (hash << 5) + c + (hash >> 2);
         }
 
-        return hashStringBuilder.toString();
+        return Integer.toHexString(hash);
     }
 }

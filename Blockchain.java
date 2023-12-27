@@ -164,11 +164,17 @@ class Blockchain {
             System.out.println("Timestamp: " + block.getTimestamp());
             System.out.println("Merkle Root: " + block.getMerkleRoot());
             System.out.println("Transactions:");
+
             for (Transaction transaction : block.getTransactions()) {
-                System.out.println("  Sender: " + transaction.getSender());
-                System.out.println("  Receiver: " + transaction.getReceiver());
-                System.out.println("  Amount: " + transaction.getAmount());
-                System.out.println("  Signature: " + transaction.getSignature());
+                System.out.println("---------------------------");
+                System.out.println("|  Sender: " + transaction.getSender() + "  |");
+                System.out.println("|  Receiver: " + transaction.getReceiver() + "  |");
+                System.out.println("|  Amount: " + transaction.getAmount() + "  |");
+                System.out.println("|  Signature: " + transaction.getSignature() + "  |");
+                System.out.println("---------------------------");
+                for (int c = 0; c < 3; c++) {
+                    System.out.print("            {}\n");
+                }
             }
             System.out.println("----------------------------");
         }

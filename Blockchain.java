@@ -55,6 +55,9 @@ class Blockchain {
         }
 
         private String calculateMerkleRoot(List<String> transactionData) throws NoSuchAlgorithmException {
+            if (transactionData == null || transactionData.isEmpty()) {
+                return "";
+            }
             MerkleTree merkleTree = new MerkleTree(transactionData);
             return Hashing.hashData(merkleTree.getMerkleRoot());
         }
@@ -136,7 +139,9 @@ class Blockchain {
         }
         if (HashList.isEmpty()) {
             HashList.add(0, "");
-            Chain.put("",new Block("", new ArrayList<>(), new Transaction("", "", 0, "")));
+            List<String> list = new ArrayList<>();
+            list.add("");
+            Chain.put("",new Block("", list, new Transaction("", "", 0, "")));
         }
         if (Chain.get(HashList.get(blockCount)).getTransactions().size() == Chain.get(HashList.get(blockCount)).getMaxTransactions()) {
             List<String> transactionData = new ArrayList<>();

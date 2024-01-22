@@ -1,5 +1,7 @@
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 class Blockchain {
     private class Block {
@@ -50,7 +52,7 @@ class Blockchain {
         }
 
         private String calculateBlockHash() throws NoSuchAlgorithmException {
-            String blockData = previousHash + lastTransaction.getAmount() + timestamp + merkleRoot;
+            String blockData = previousHash + timestamp + merkleRoot;
             return Hashing.hashData(blockData);
         }
 
@@ -66,13 +68,13 @@ class Blockchain {
     public static class Transaction {
         private final String sender;
         private final String receiver;
-        private final double amount;
+        //private final double amount;
         private final String signature;
 
-        public Transaction(String sender, String receiver, double amount, String signature) {
+        public Transaction(String sender, String receiver, String signature) {
             this.sender = sender;
             this.receiver = receiver;
-            this.amount = amount;
+         //   this.amount = amount;
             this.signature = signature;
         }
 
@@ -84,9 +86,9 @@ class Blockchain {
             return receiver;
         }
 
-        public double getAmount() {
-            return amount;
-        }
+        //public double getAmount() {
+        //    return amount;
+        //}
 
         public String getSignature() {
             return signature;
@@ -131,15 +133,15 @@ class Blockchain {
             HashList.add(0, "");
             List<String> list = new ArrayList<>();
             list.add("");
-            Chain.put("",new Block("", list, new Transaction("", "", 0, "")));
+            Chain.put("",new Block("", list, new Transaction("", "", "")));
         }
         if (Chain.get(HashList.get(blockCount)).getTransactions().size() == Chain.get(HashList.get(blockCount)).getMaxTransactions()) {
             List<String> transactionData = new ArrayList<>();
             for (Transaction tx : Chain.get(HashList.get(blockCount)).getTransactions()) {
-                transactionData.add(tx.getSender() + tx.getReceiver() + tx.getAmount() + tx.getSignature());
+                transactionData.add(tx.getSender() + tx.getReceiver() + tx.getSignature());
             }
 
-            transactionData.add(transaction.getSender() + transaction.getReceiver() + transaction.getAmount() + transaction.getSignature());
+            transactionData.add(transaction.getSender() + transaction.getReceiver() + transaction.getSignature());
             addBlock(transaction, transactionData);
         } else {
             Chain.get(HashList.get(blockCount)).addTransaction(transaction);
@@ -159,7 +161,6 @@ class Blockchain {
                 System.out.println("---------------------------");
                 System.out.println("|  Sender: " + transaction.getSender() + "  |");
                 System.out.println("|  Receiver: " + transaction.getReceiver() + "  |");
-                System.out.println("|  Amount: " + transaction.getAmount() + "  |");
                 System.out.println("|  Signature: " + transaction.getSignature() + "  |");
                 System.out.println("---------------------------");
                 for (int c = 0; c < 3; c++) {

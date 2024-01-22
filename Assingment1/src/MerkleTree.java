@@ -12,7 +12,7 @@ public class MerkleTree {
         this.merkleTree = buildMerkleTree();
     }
 
-    private List<String> buildMerkleTree() throws NoSuchAlgorithmException {
+    private List<String> buildMerkleTree() {
         List<String> tree = new ArrayList<>(leaves);
 
         while (tree.size() > 1) {

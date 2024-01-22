@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Assingment1/Assingment1.iml" filepath="$PROJECT_DIR$/Assingment1/Assingment1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/BlockChain1.iml" filepath="$PROJECT_DIR$/.idea/BlockChain1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Midterm/Midterm.iml" filepath="$PROJECT_DIR$/Midterm/Midterm.iml" />
     </modules>
   </component>
 </project>

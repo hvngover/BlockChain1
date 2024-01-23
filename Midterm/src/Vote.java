@@ -1,12 +1,14 @@
 public class Vote {
     private String sender;
     private String signature;
-    private int candidate;
+    private Candidate candidate;
+    private boolean voteUsed;
 
-    public Vote(String sender, String signature) {
+    public Vote(String sender, String signature, Candidate candidate) {
         this.sender = sender;
         this.signature = signature;
-        this.candidate =
+        this.candidate = candidate;
+        this.voteUsed = false;
     }
 
     public String getSender() {
@@ -17,7 +19,18 @@ public class Vote {
         return signature;
     }
 
-    public int getCandidate() {
+    public Candidate getCandidate() {
         return candidate;
+    }
+
+    public boolean getVoted() {
+        return voteUsed;
+    }
+
+    public void setVoted(boolean voteUsed) {
+        if (this.voteUsed) {
+            return;
+        }
+        this.voteUsed = voteUsed;
     }
 }

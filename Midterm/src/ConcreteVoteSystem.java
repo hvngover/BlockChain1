@@ -1,45 +1,55 @@
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class ConcreteVoteSystem implements VoteSystem {
     private static VoteSystem instance;
     private Blockchain blockchain;
     private Set<Vote> votes;
-    private Set<Candidate> candidates;
+    private List<Candidate> candidates;
+    private String reason;
 
 
-    private ConcreteVoteSystem(List<Candidate> candidates) {
+    private ConcreteVoteSystem(List<Candidate> candidates, String reason) {
         blockchain = Blockchain.getInstance();
         votes = new HashSet<>();
+        this.reason = reason;
 
+        this.candidates = new ArrayList<>();
         for (Candidate candidate : candidates) {
             this.candidates.add(candidate);
         }
     }
 
-
-    public static VoteSystem getInstance(List<Candidate> candidates) {
+    public static VoteSystem getInstance(List<Candidate> candidates, String reason) {
         if (instance == null) {
-            return new ConcreteVoteSystem(candidates);
+            instance = new ConcreteVoteSystem(candidates, reason);
         }
         return instance;
     }
 
     @Override
-    public void castVote(Vote sender) throws NoSuchAlgorithmException {
-        Candidate[] candidatesTemp = candidates.toArray(new Candidate[candidates.size()]);
-        candidatesTemp[sender.getCandidate()];
-        votes.add(sender);
+    public Vote castVote(Vote sender) {
+        if (!sender.getVoted()) {
+            candidates.remove(sender.getCandidate());
+            candidates.get(sender.getCandidate().getCandidateIndex()).addVote(sender);
+            votes.add(sender);
+            sender.setVoted(true);
+        }
+        return sender;
     }
 
     @Override
-    public int getVotesForCandidate() {
+    public int getVotesForCandidate(String candidate) {
+        for (Candidate c : candidates) {
+            if (c.getFullName() == candidate) {
+                return c.getVotersCount();
+            }
+        }
         return 0;
     }
 
     @Override
-    public void getCandidates() {
-        blockchain.printBlockchain();
+    public List<Candidate> getCandidates() {
+        return candidates;
     }
 
     @Override

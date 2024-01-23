@@ -4,16 +4,23 @@ import java.util.Set;
 public class Candidate {
     private String fullName;
     private Set<Vote> voters;
+    private int candidateIndex;
     private int votersCount;
 
-    public Candidate(String fullName) {
+    public Candidate(String fullName, int candidateIndex) {
         this.fullName = fullName;
+        this.candidateIndex = candidateIndex;
         voters = new HashSet<>();
+        votersCount = 0;
     }
 
     public void addVote(Vote vote) {
         voters.add(vote);
-        votersCount++;
+        votersCount += 1;
+    }
+
+    public int getCandidateIndex() {
+        return candidateIndex;
     }
 
     public Set<Vote> getVoters() {
@@ -22,5 +29,9 @@ public class Candidate {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public int getVotersCount() {
+        return votersCount;
     }
 }

@@ -19,6 +19,8 @@ public class ConcreteVoteSystem implements VoteSystem {
         }
     }
 
+
+
     public static VoteSystem getInstance(List<Candidate> candidates, String reason) {
         if (instance == null) {
             instance = new ConcreteVoteSystem(candidates, reason);
@@ -28,7 +30,7 @@ public class ConcreteVoteSystem implements VoteSystem {
 
     @Override
     public Vote castVote(Vote sender) {
-        if (!sender.getVoted()) {
+        if (!votes.contains(sender)) {
             candidates.remove(sender.getCandidate());
             candidates.get(sender.getCandidate().getCandidateIndex()).addVote(sender);
             votes.add(sender);

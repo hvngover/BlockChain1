@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-contract ERC721Token {
+contract ERC721 {
     uint256 public totalTokens;
     mapping(uint256 => address) public tokenOwners;
     mapping(address => uint256[]) public ownedTokens;

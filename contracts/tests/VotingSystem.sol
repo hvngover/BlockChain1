@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
-import "./ERC20.sol";
-import "./ERC721.sol";
+import "../ERC20.sol";
+import "../ERC721.sol";
 
 contract VotingSystem {
     struct Election {

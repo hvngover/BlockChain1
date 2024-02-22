@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GovVoteChain - Start Voting Event</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Start a Voting Event</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/voting">Vote Now</a></li>
+                <li><a href="/startvoting">Start Voting Event</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form id="startVotingForm">
+            <label for="electionName">Election Name:</label>
+            <input type="text" id="electionName" name="electionName" required>
+            <label for="startDateTime">Start Date and Time:</label>
+            <input type="datetime-local" id="startDateTime" name="startDateTime" required>
+            <label for="endDateTime">End Date and Time:</label>
+            <input type="datetime-local" id="endDateTime" name="endDateTime" required>
+            <button type="submit">Initiate Voting Event</button>
+        </form>
+    </main>
+    <footer>
+        <p></p>
+    </footer>
+</body>
+</html>

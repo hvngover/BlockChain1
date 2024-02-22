@@ -6,6 +6,13 @@ Smart Contract (VotingSystem.sol): A solidity contract that manages the voting p
 
 Server Setup (server.js): Utilizes Express.js to serve the front-end files and handle routing for the application, ensuring a smooth interaction between the user interface and the blockchain backend.
 
+## Features
+Blockchain Security: Utilizes the security features of blockchain technology to ensure tamper-resistant voting.
+Transparent Ledger: Provides a transparent ledger of all voting transactions, enhancing trust and transparency in the electoral process.
+Decentralized Identity Verification: Implements decentralized identity verification to ensure the integrity of voters and prevent fraudulent activities.
+Smart Contracts for Governance: Utilizes smart contracts for governing the voting process, ensuring trustless execution and transparency.
+Anonymity and Privacy: Ensures the anonymity and privacy of voters while maintaining the integrity of the voting process.
+
 Front-end Files:
 
 index.html: The entry point for the application, providing users with the initial interface to interact with the voting system.

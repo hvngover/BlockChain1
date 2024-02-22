@@ -19,19 +19,19 @@ contract ERC20Token is ERC20Interface {
         _decimal = 18;
     }
 
-    function name() external view override returns (string memory) {
+    function getName() external view override returns (string memory) {
         return _name;
     }
 
-    function symbol() external view override returns (string memory) {
+    function getSymbol() external view override returns (string memory) {
         return _symbol;
     }
 
-    function totalSupply() external view override returns (uint256) {
+    function getTotalSupply() external view override returns (uint256) {
         return _totalSupply;
     }
 
-    function balanceOf(address account) external view override returns (uint256) {
+    function getBalanceOf(address account) external view override returns (uint256) {
         return _balances[account];
     }
 

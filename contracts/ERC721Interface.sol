@@ -1,8 +1,8 @@
 pragma solidity ^0.8.0;
 
 interface ERC721Interface {
-    function balanceOf(address _owner) external view returns (uint256);
-    function ownerOf(uint256 _tokenId) external view returns (address);
+    function getBalanceOf(address _owner) external view returns (uint256);
+    function getOwnerOf(uint256 _tokenId) external view returns (address);
 
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) external;
     function transferFrom(address _from, address _to, uint256 _tokenId) external;

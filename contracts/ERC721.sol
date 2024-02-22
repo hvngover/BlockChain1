@@ -14,11 +14,11 @@ contract ERC721Token is ERC721Interface {
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
 
-    function balanceOf(address _owner) external view override returns (uint256) {
+    function getBalanceOf(address _owner) external view override returns (uint256) {
         return _ownedTokens[_owner].length;
     }
 
-    function ownerOf(uint256 _tokenId) external view override returns (address) {
+    function getOwnerOf(uint256 _tokenId) external view override returns (address) {
         return _tokenOwners[_tokenId];
     }
 

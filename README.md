@@ -2,16 +2,16 @@
 This project involves a blockchain-based voting system, leveraging Ethereum smart contracts for the voting mechanism. The system includes a server setup using Express.js, front-end HTML files for the user interface, and solidity contracts for the voting logic. It demonstrates the integration of web technologies with Ethereum blockchain functionalities.
 
 ## Components
-### Smart Contract (VotingSystem.sol): A solidity contract that manages the voting process. It includes functions to initialize the voting, cast votes, and tally the results securely on the Ethereum blockchain.
+Smart Contract (VotingSystem.sol): A solidity contract that manages the voting process. It includes functions to initialize the voting, cast votes, and tally the results securely on the Ethereum blockchain.
 
-### Server Setup (server.js): Utilizes Express.js to serve the front-end files and handle routing for the application, ensuring a smooth interaction between the user interface and the blockchain backend.
+Server Setup (server.js): Utilizes Express.js to serve the front-end files and handle routing for the application, ensuring a smooth interaction between the user interface and the blockchain backend.
 
-### Front-end Files:
+Front-end Files:
 
 index.html: The entry point for the application, providing users with the initial interface to interact with the voting system.
 startvoting.html: A dedicated page for initializing the voting process, accessible by authorized users.
 voting.html: Allows users to cast their votes securely and view ongoing results.
-### Testing Scripts (VotingSystem.test.js): Ensures the integrity and reliability of the voting smart contract through comprehensive test cases.
+Testing Scripts (VotingSystem.test.js): Ensures the integrity and reliability of the voting smart contract through comprehensive test cases.
 
 ## Assignment Alignment
 ERC-20 Token Development: While the project primarily focuses on a voting system, incorporating ERC-20 tokens could involve rewarding participants or managing voting rights through token ownership.

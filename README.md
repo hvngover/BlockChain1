@@ -1,6 +1,6 @@
 # GovVoteChain
 Group: SE-2215
-Team: Akzhan, Sayat, Arunaz, Zhandos, Adilkhan
+Team: Akzhan, Sayat, Arunaz, Zhandos, Adilkhan !
 
 ## Project Overview
 This project involves a blockchain-based voting system, leveraging Ethereum smart contracts for the voting mechanism. The system includes a server setup using Express.js, front-end HTML files for the user interface, and solidity contracts for the voting logic. It demonstrates the integration of web technologies with Ethereum blockchain functionalities.

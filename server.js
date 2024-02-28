@@ -3,7 +3,7 @@ const app = express();
 const port = 4235;
 const path = __dirname + '/src/frontend/';
 
-app.use(express.static('src/frontend'));
+app.use(express.static(path));
 app.get(('/'), (req,res) => {
   res.sendFile(path + 'index.html');
 });

@@ -1,82 +1,190 @@
-
-body, h1, h2, p, ul, li, form, input, select, button {
+/* General Reset */
+* {
     margin: 0;
     padding: 0;
-}
-
-h1 {
-    text-align: center;
-}
-
-ul {
-    text-align: end;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
     color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
-header {
-    background-color: #333;
-    color: #fff;
+.container {
+    width: 100%;
+    max-width: 800px;
     padding: 20px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 24px;
+header {
+    background-color: #0056b3;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+header:hover {
+    background-color: #004080; /* Darken the color on hover */
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
+    padding: 0;
 }
 
 nav ul li {
     display: inline;
-    margin-right: 20px;
+    margin: 0 10px;
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ffd700; /* Change to a bright color on hover */
 }
 
 main {
     padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex-grow: 1;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 36px;
+    color: #0056b3;
+}
+
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    color: #004466;
+    border-bottom: 2px solid #004466;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+footer {
+    background-color: #0056b3;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+footer:hover {
+    background-color: #004080; /* Darken the color on hover */
+}
+
+footer p {
+    font-size: 16px;
 }
 
 form {
-    background-color: #fff;
+    background-color: #f0f0f0;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
 }
 
 input[type="text"],
+input[type="datetime-local"],
 select {
-    width: 100%;
+    width: calc(100% - 22px);
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
+    display: inline-block;
+    padding: 12px 24px;
     border: none;
-    border-radius: 3px;
+    background-color: #004466;
+    color: #fff;
     cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: green;
+    background-color: #002639; /* Darken the color on hover */
 }
+
+/* Add styles for notification */
+.notification {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #00cc99;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+/* Add keyframes for confetti animation */
+@keyframes confetti {
+    0% { transform: translateY(0) rotateZ(0); }
+    100% { transform: translateY(1000px) rotateZ(1800deg); }
+}
+
+/* Add shake animation for submit button */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Apply shake animation on hover */
+#submitVoteButton:hover {
+    animation: shake 0.3s ease;
+}
+

@@ -5,154 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GovVoteChain - Vote Now</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
 </head>
 <body>
-<header>
-    <h1>Voting Page</h1>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/voting">Vote Now</a></li>
-            <li><a href="/startvoting">Start Voting Event</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    <form id="voteForm">
-        <button onclick="connectMetamask()">CONNECT TO METAMASK TO PAY</button> <br><br>
-
-        <label for="voterID">Voter ID:</label>
-        <input type="text" id="voterID" name="voterID" required>
-        <label for="voteOption">Select your candidate:</label>
-        <select id="voteOption" name="voteOption">
-            <option>Someone</option>
-        </select>
-        <button type="button" id="incrementButton">Submit Vote</button>
-        <p id="accountArea"></p>
-        <p style="text-align: center" id="counter">0</p>
-        <p style="text-align: center" id="voteStatus">Vote not submitted</p>
-    </form>
-</main>
-<script>
-    const incrementButton = document.getElementById('incrementButton');
-    const counter = document.getElementById('counter');
-    const voterIDInput = document.getElementById('voterID');
-    const voteStatus = document.getElementById('voteStatus');
-
-    let count = 0;
-    let voteSubmitted = false;
-
-    function incrementCounter() {
-        count++;
-        counter.textContent = count;
-    }
-
-    function require(condition, message) {
-        if (!condition) {
-            alert(message);
-            throw new Error(message);
-        }
-    }
-
-    function submitVote() {
-        require(voterIDInput.value.trim() !== '', 'Please enter your Voter ID before submitting your vote.');
-
-        incrementCounter();
-        voteSubmitted = true;
-        voteStatus.textContent = 'Vote submitted successfully';
-        alert('You vote successfully');
-    }
-
-    incrementButton.addEventListener('click', submitVote);
-
-    let account;
-    const connectMetamask = async () => {
-        if(window.ethereum !== "undefined") {
-            const accounts = await ethereum.request({method: "eth_requestAccounts"});
-            account = accounts[0];
-            document.getElementById("accountArea").innerHTML = account;
-        }
-    }
-
-
-    const Web3 = require('web3');
-    const web3 = new Web3('your_provider_url');
-
-    function vote() {
-        const contractAddress = '0xd9145CCE52D386f254917e481eB44e9943F39138';
-        const contractABI = [
-            {
-                "inputs": [],
-                "name": "vote",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "name": "hasVoted",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "name": "votesReceived",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
-        const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-        const voterID = document.getElementById('voterID').value;
-        const voteOption = document.getElementById('voteOption').value;
-
-        const value = web3.utils.toWei('0.1', 'ether');
-
-        contract.methods.vote().send({ from: voterID, value: value })
-            .then((receipt) => {
-                console.log(receipt);
-                alert('Vote submitted successfully');
-            })
-            .catch((error) => {
-                console.error(error);
-                alert('Failed to submit vote: ' + error.message);
-            });
-    }
-
-
-
-</script>
-
-
-
-<footer>
-    <p></p>
-</footer>
+    <header>
+        <h1>GovVoteChain Voting Page</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/voting">Vote Now</a></li>
+                <li><a href="/startvoting">Start Voting Event</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form id="voteForm">
+            <label for="voterID">Voter ID:</label>
+            <input type="text" id="voterID" name="voterID" required>
+            <label for="voteOption">Select your candidate:</label>
+            <select id="voteOption" name="voteOption">
+                <option value="candidate1">Jane Doe - Candidate 1</option>
+                <option value="candidate2">John Smith - Candidate 2</option>
+                <option value="candidate3">Alex Johnson - Candidate 3</option>
+                <option value="candidate4">Samantha Lee - Candidate 4</option>
+            </select>
+            <button type="submit" id="submitVoteButton">Submit Vote</button>
+            <div id="notification" class="notification">Vote submitted successfully!</div>
+        </form>
+    </main>
+    <footer>
+        <p>Secure and transparent voting with blockchain technology.</p>
+    </footer>
+    <script src="js/script.js"></script>
+    <script src="js/script1.js"></script>
 </body>
 </html>
